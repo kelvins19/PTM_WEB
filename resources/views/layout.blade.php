@@ -57,6 +57,7 @@
             margin-right: 0;
         }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     

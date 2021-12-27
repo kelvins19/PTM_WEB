@@ -15,6 +15,7 @@
                         @endif
                       <form id="login" action="{{ route('login.post') }}" method="POST">
                           @csrf
+                          @method('post')
                           <div class="form-group row">
                               <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                               <div class="col-md-6">
@@ -60,6 +61,7 @@
                 url: "{{ route('login.post') }}",
                 method: 'POST',
                 data: new FormData(event.target),
+                dataType: 'html',
                 processData: false,
                 contentType:"application/json",
             }).done(function() {
