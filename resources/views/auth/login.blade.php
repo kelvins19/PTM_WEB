@@ -13,7 +13,7 @@
                                 <p>{{ implode('', $errors->all()) }}</p>
                             </div>
                         @endif
-                      <form action="{{ route('login.post') }}" method="POST">
+                      <form id="login" action="{{ route('login.post') }}" method="POST">
                           @csrf
                           <div class="form-group row">
                               <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
@@ -49,3 +49,29 @@
   </div>
 </main>
 @endsection
+
+@push('scripts')
+<script>
+    $(() => {
+        $('#login').on('submit', function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "{{ route('login.post') }}",
+                method: 'POST',
+                data: new FormData(event.target),
+                processData: false,
+                contentType:false,
+            }).done(function() {
+                location.href = "{{ route('products') }}"
+            }).fail(function(_) {
+                iziToast.error({
+                    title: 'Error',
+                    message: 'Login Failed',
+                    position: 'topRight'
+                });
+            });
+        })
+    });
+</script>
+@endpush
