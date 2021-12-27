@@ -53,7 +53,7 @@ class AuthController extends Controller
      */
     public function postLogin(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required',
         ]);
