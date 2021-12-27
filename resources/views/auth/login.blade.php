@@ -61,7 +61,7 @@
                 method: 'POST',
                 data: new FormData(event.target),
                 processData: false,
-                contentType:false,
+                contentType:"application/json",
             }).done(function() {
                 location.href = "{{ route('products') }}"
             }).fail(function(_) {
