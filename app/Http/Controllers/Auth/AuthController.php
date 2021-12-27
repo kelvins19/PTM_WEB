@@ -67,7 +67,6 @@ class AuthController extends Controller
             return redirect()->intended('/')
                     ->withSuccess('You have Successfully loggedin');
         }
-        var_dump('test');
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors('Wrong Email or Password. Please Try Again!');
     }
       
