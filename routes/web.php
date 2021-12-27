@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdRakController;
 use App\Http\Controllers\Admin\AdMerkController;
 use App\Http\Controllers\Admin\AdMerkKategoriController;
 use App\Http\Controllers\Admin\AdMerkSubKategoriController;
+use App\Http\Controllers\Admin\AdUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,13 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('add', [AdProductController::class, 'add'])->name('admin.product.add');
         Route::post('create', [AdProductController::class, 'createNewProduct'])->name('admin.product.create');
+    });
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('', [AdUserController::class, 'index'])->name('admin.users');
+        Route::get('edit/{id}', [AdUserController::class, 'edit'])->name('admin.users.edit');
+        Route::get('delete/{id}', [AdUserController::class, 'delete'])->name('admin.users.delete');
+        Route::post('update/{id}', [AdUserController::class, 'update'])->name('admin.users.update');
     });
 
     Route::group(['prefix' => 'pelanggan'], function () {

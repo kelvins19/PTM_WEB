@@ -73,12 +73,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
-                @else
+                @elseif (Auth::user()->roles === 1)
+                    <li class="nav-item">
+                        <p class="nav-link">Hi, {{ Auth::user()->name }}</p>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin') }}">Admin</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Register User</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <p class="nav-link">Hi, {{ Auth::user()->name }}</p>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>

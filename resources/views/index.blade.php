@@ -22,7 +22,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="state">Product Category</label>
+                        <label for="state">Category</label>
                         <select name="category" id="category" class="form-control">
                             <option value="">All</option>  
                             @foreach ($categories as $category)
@@ -54,11 +54,15 @@
                 <tr>
                     <th scope="col">Parts No.</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Price</th>
                     <th scope="col">Brand</th>
-                    <th scope="col">Product Category</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Car Type</th>
-                    <th scope="col">Stock Availability</th>
+                    @if(!Auth::guest()) 
+                        @if (Auth::user()->roles === 0 || Auth::user()->roles === 1)
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock Availability</th>
+                        @endif
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -66,19 +70,23 @@
                     <tr>
                         <td>{{ $product->no_part }}</td>
                         <td>{{ $product->nama_barang }}</td>
-                        <td>Rp. {{ number_format($product->harga_jual) }}</td>
                         <td>{{ $product->merk->nama_merk ?? '' }}</td>
                         <td>{{ $product->merk_kategori->merk_kategori ?? '' }}</td>
                         <td>{{ $product->merk_subkategori->merk_subkategori ?? '' }}</td>
-                        @if ($product->stok > 0)
-                            <td>Yes</td>
-                        @else
-                            <td>No</td>
+                        @if(!Auth::guest()) 
+                            @if (Auth::user()->roles === 0 || Auth::user()->roles === 1)
+                                <td>Rp. {{ number_format($product->harga_jual) }}</td>
+                                @if ($product->stok > 0)
+                                    <td>Yes</td>
+                                @else
+                                    <td>No</td>
+                                @endif
+                            @endif
                         @endif
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">Sorry, no products found</td>
+                        <td colspan="7">Sorry, no products found</td>
                     </tr>
                 @endforelse
                 </tbody>

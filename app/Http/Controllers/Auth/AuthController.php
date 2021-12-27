@@ -11,6 +11,8 @@ use Session;
 
 class AuthController extends Controller
 {
+    const USER_ADMIN = 1;
+    const USER_NORMAL = 0;
     //
     /**
      * Write code on Method
@@ -19,6 +21,10 @@ class AuthController extends Controller
      */
     public function index()
     {
+        if(!Auth::guest())
+        {
+            return redirect("/")->withSuccess('Oppes! You don\' have any privileges to access this page!');
+        }
         return view('auth.login');
     }  
       
@@ -29,11 +35,13 @@ class AuthController extends Controller
      */
     public function registration()
     {
-        if (Auth::user())
+        if (!Auth::guest())
         {
-            return view('auth.registration');
+            if (Auth::user()->roles === 1)
+            {
+                return view('auth.registration');
+            }
         }
-
         return redirect("/")->withSuccess('Oppes! You don\' have any privileges to access this page!');
     }
       
@@ -51,8 +59,12 @@ class AuthController extends Controller
    
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('admin')
+            if (Auth::user()->roles === self::USER_ADMIN) {
+                return redirect()->intended('admin')
                         ->withSuccess('You have Successfully loggedin');
+            }
+            return redirect()->intended('/')
+                    ->withSuccess('You have Successfully loggedin');
         }
   
         return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
@@ -74,7 +86,7 @@ class AuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
          
-        return redirect("admin")->withSuccess('Great! You have Successfully loggedin');
+        return redirect("admin/users")->withSuccess('Great! You have Successfully added new users');
     }
     
     /**
@@ -84,7 +96,7 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        if(Auth::check()){
+        if(Auth::check() && Auth::user()->roles === 1){
             return view('admin-index');
         }
   
