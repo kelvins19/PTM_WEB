@@ -66,8 +66,8 @@ class AuthController extends Controller
             return redirect()->intended('/')
                     ->withSuccess('You have Successfully loggedin');
         }
-  
-        return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
+        var_dump('test');
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors('Wrong Email or Password. Please Try Again!');
     }
       
     /**

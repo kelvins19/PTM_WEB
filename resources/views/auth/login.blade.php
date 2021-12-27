@@ -8,7 +8,11 @@
               <div class="card">
                   <div class="card-header">Login</div>
                   <div class="card-body">
-  
+                        @if ($errors->any())
+                            <div class="alert alert-danger text-center" role="alert">
+                                <p>{{ implode('', $errors->all()) }}</p>
+                            </div>
+                        @endif
                       <form action="{{ route('login.post') }}" method="POST">
                           @csrf
                           <div class="form-group row">
@@ -30,17 +34,7 @@
                                   @endif
                               </div>
                           </div>
-  
-                          <div class="form-group row">
-                              <div class="col-md-6 offset-md-4">
-                                  <div class="checkbox">
-                                      <label>
-                                          <input type="checkbox" name="remember"> Remember Me
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-  
+
                           <div class="col-md-6 offset-md-4">
                               <button type="submit" class="btn btn-primary">
                                   Login
