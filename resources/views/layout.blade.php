@@ -63,39 +63,18 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="/">LSM</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+        <div class="navbar navbar-light" id="navbarSupportedContent">
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
+                        <a class="nav-link text-secondary" href="{{ route('login') }}">Login</a>
                 @elseif (Auth::user()->roles === 1)
-                    <li class="nav-item">
-                        <p class="nav-link">Hi, {{ Auth::user()->name }}</p>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin') }}">Admin</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register User</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
-                    </li>
+                        <a href="" class="nav-link text-secondary">Hi, {{ Auth::user()->name }}</a>
+                        <a class="nav-link text-secondary" href="{{ route('admin') }}">Admin</a>
+                        <a class="nav-link text-secondary" href="{{ route('logout') }}">Logout</a>
                 @else
-                    <li class="nav-item">
-                        <p class="nav-link">Hi, {{ Auth::user()->name }}</p>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
-                    </li>
+                        <p class="nav-link text-secondary">Hi, {{ Auth::user()->name }}</p>
+                        <a class="nav-link text-secondary" href="{{ route('logout') }}">Logout</a>
                 @endguest
-            </ul>
-  
         </div>
     </div>
 </nav>
