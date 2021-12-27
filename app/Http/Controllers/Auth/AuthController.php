@@ -58,12 +58,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
    
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('/')
-                    ->withSuccess('You have Successfully loggedin');
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) {
+            return redirect()->intended('/');
         } else {
-            return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors('Wrong Email or Password. Please Try Again!');
+            return redirect()->back()->withInput([$request->input('email')])->withErrors('Wrong Email or Password. Please Try Again!');
         }
     }
       
