@@ -49,29 +49,3 @@
   </div>
 </main>
 @endsection
-
-@push('scripts')
-<script>
-    $(() => {
-        $('#login').on('submit', function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('login.post') }}",
-                method: 'POST',
-                data: new FormData(event.target),
-                processData: false,
-                contentType:"application/json",
-            }).done(function() {
-                location.href = "{{ route('products') }}"
-            }).fail(function(_) {
-                iziToast.error({
-                    title: 'Error',
-                    message: 'Login Failed',
-                    position: 'topRight'
-                });
-            });
-        })
-    });
-</script>
-@endpush

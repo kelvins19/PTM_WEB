@@ -60,14 +60,11 @@ class AuthController extends Controller
    
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->roles === self::USER_ADMIN) {
-                return redirect()->intended('admin')
-                        ->withSuccess('You have Successfully loggedin');
-            }
             return redirect()->intended('/')
                     ->withSuccess('You have Successfully loggedin');
+        } else {
+            return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors('Wrong Email or Password. Please Try Again!');
         }
-        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors('Wrong Email or Password. Please Try Again!');
     }
       
     /**
