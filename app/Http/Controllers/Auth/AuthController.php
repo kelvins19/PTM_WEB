@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         if(!Auth::guest())
         {
-            return redirect("/")->withSuccess('Oppes! You don\' have any privileges to access this page!');
+            return redirect("/");
         }
         return view('auth.login');
     }  
@@ -59,6 +59,7 @@ class AuthController extends Controller
         ]);
    
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) {
+            // ddd($request->session()->get('key'));
             return redirect()->intended('/');
         } else {
             return redirect()->back()->withInput([$request->input('email')])->withErrors('Wrong Email or Password. Please Try Again!');
