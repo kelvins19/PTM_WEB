@@ -13,10 +13,10 @@ class ProductController extends Controller
     public function index(Request $request) 
     {
         $search = $request->search ? $request->search : '';
+        $search = strtoupper($search);
         $brand = $request->brand ? $request->brand : '';
         $category = $request->category ? $request->category : '';
         $type = $request->type ? $request->type : '';
-        // dd($search_query);
 
         $brands     = Merk::get();
         $categories = MerkKategori::get();
