@@ -9,11 +9,27 @@ use Hash;
 use Auth;
 use Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthController extends Controller
 {
     const USER_ADMIN = 1;
     const USER_NORMAL = 0;
+
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'logout']);
+    }
+
     //
     /**
      * Write code on Method
@@ -59,7 +75,6 @@ class AuthController extends Controller
         ]);
    
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) {
-            // ddd($request->session()->get('key'));
             return redirect()->intended('/');
         } else {
             return redirect()->back()->withInput([$request->input('email')])->withErrors('Wrong Email or Password. Please Try Again!');
